@@ -5,7 +5,7 @@ const Authorization = require("../middleware/authorize")
 const Login = require("../middleware/login")
 
 router.post("/register", EmployeeController.signup);
-router.put("/update/:id", Authorization, Login,  EmployeeController.update);
+router.put("/update/:id", Authorization,  EmployeeController.update);
 router.get("/employees", EmployeeController.fetchAllEmployees);
 router.get("/employeeById/:id", EmployeeController.fetchEmployeeById);
 router.delete("/employeeById/:id", EmployeeController.deleteEmployee)

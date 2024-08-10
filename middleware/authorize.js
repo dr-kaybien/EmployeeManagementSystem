@@ -8,7 +8,7 @@ const authenticate = async (req, res, next) => {
         return;
     }
     try {
-        const { userId, exp } = await jwt.verify(token, process.env.JWT_SECRET);
+        const { employeeId, exp } = await jwt.verify(token, process.env.JWT_SECRET);
             // Check if token has expired
             if (exp < Date.now().valueOf() / 1000) {
                 return res.status(401).json({

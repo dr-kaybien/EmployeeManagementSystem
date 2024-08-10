@@ -11,7 +11,7 @@ module.exports = {
             const newEmployee = new Employee(employee);
             const password = employee.password;
             if (req.body.password) {
-                employee.password = bcrypt.hashSync(req.body.password, 10);
+                newEmployee.password = bcrypt.hash(req.body.password, 10);
               }
                 const accessToken = jwt.sign(
                 {EmployeeId: employee._id } , 
