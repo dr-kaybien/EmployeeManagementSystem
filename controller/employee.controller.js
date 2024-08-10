@@ -2,29 +2,23 @@ const Employee = require("../model/employee.model")
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-bcrypt.genSalt(saltRounds, (err, salt) => {
-    if (err) {
-        return;
-    }
-});
+
 
 module.exports = {
     signup: async (req, res) => {
         try {
             const employee = req.body;
             const newEmployee = new Employee(employee);
-            const accessToken = jwt.sign(
+            const password = employee.password;
+            if (req.body.password) {
+                employee.password = bcrypt.hashSync(req.body.password, 10);
+              }
+                const accessToken = jwt.sign(
                 {EmployeeId: employee._id } , 
                 process.env.JWT_SECRET, 
                 {expiresIn: "1h"});
             newEmployee.token = accessToken
-            const password = employee.password;
-            bcrypt.hash(password, salt, (err, hash) => {
-                if (err) {
-                    return;
-                }
-                newEmployee.hash = hash;
-            })
+            
             
             newEmployee.save();
             res.json({
